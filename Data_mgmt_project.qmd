@@ -1,0 +1,46 @@
+---
+title: "Data_mgmt_project"
+author: "ER and SL"
+format: html
+---
+
+```{r}
+here::i_am("Data_mgmt_Projet.Rproj")
+library(here)
+library(ggplot2)
+library(dplyr)
+library(vroom)
+library(tidyr)
+```
+
+### Data Loading 
+Data files are small yet numerous, fortunately, there are only so many ways organizations can name countries so joining the files is not too challenging.
+```{r}
+Survival_Rate <- vroom(here("New_Data/Survival_Rate.csv"))
+Share_Studs_Priv <- vroom(here("New_Data/Share_Priv_lowsec.csv"))
+Pop_Density <- vroom(here("New_Data/Reworked_Density.csv"))
+Enrolment <- vroom(here("New_Data/Tot_Enrol_Rate_Lowsec.csv"))
+
+Start_Yr <- vroom(here("New_Data/Start_Month_Acad.csv"))
+End_Yr <- vroom(here("New_Data/End_Month_Acad.csv"))
+
+Gov_Exp <- vroom(here("New_Data/Gov_Exp_GDP.csv"))
+
+MeanSchooling <- vroom(here("New_Data/Mean_Yrs_Schooling.csv"))
+EntranceAge <- vroom(here("New_Data/Entrance_Age.csv"))
+
+```
+
+Notes for later :
+- When UNESCO data are aggregated in regional form they don't have a name in character but a number, so it should be easy to rid or separate with a is.number or something of that kind
+- Some of the data, notably Illiteracy seem to have different indicators name so we need to ensure that it is the same thing or else separate them in different parts
+
+Due to UNESCO website being fucked up I cannot select the 2000 time period when I select only a few years. So for now I provide the 2009 and 2018 data, with for some data a 3 year range that we could mean, in case there are no data for 2009 or 2018 but some data before or after
+
+- Most of the data has a 'value' to show the value, problem is we would end up with a whole lot of 'values' so need to rename all this probably at the end of each datasets treatment, right before joining everything
+- Some variable are duplicated(Share_Studs_Priv has twice Time as well as ALL the UNESCO data), we will need to rid of them
+- Might be good to quickly turn Start and End of Year data sets into one so we can acquire the info we want out of it, namely the duration of a school year.
+
+### Some testing processes
+
+
